@@ -15,6 +15,29 @@ c = constantes.const;
 solucao = 1;
 tamanho = 0;
 
+diagonais = abs(diag(a));
+tamanhoDaMatriz = size(a);
+
+%===================================================
+%Tentativa de deixar o codigo pronto para N equacoes
+%Melhorar!!!
+%===================================================
+% for i = 1:tamanhoDaMatriz
+%     disp(i);
+%     soma = 0;
+%     for j = 1:tamanhoDaMatriz
+%         if j ~= i
+%             fprintf("i: %d; j: %d; aij: %d\n", i, j, abs(a(i,j)));
+%             soma = soma + abs(a(i,j))
+%         end
+%         if diagonais(i) < soma
+%             solucao = 0;
+%             break;
+%         end
+%     end
+% end
+
+
 %Primeiro criterio de convergencia (igual ao Jacobi)
 if ( abs(a(1,1)) < (abs(a(1,2)) + abs(a(1,3)) + abs(a(1,4)) ) || abs(a(2,2)) < (abs(a(2,1)) + abs(a(2,3)) + abs(a(2,4)) ) || abs(a(3,3)) < (abs(a(3,1)) + abs(a(3,2)) + abs(a(3,4)) ) || abs(a(4,4)) < (abs(a(4,1)) + abs(a(4,2)) + abs(a(4,3)) ))
     solucao = 0;
