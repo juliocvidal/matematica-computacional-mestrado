@@ -1,7 +1,8 @@
 % Mestrado em Engenharia da Computacao e Sistemas - UEMA
 % Disciplica de Matematica Computacional Aplicada
 %
-% Programa para calcular o zero de uma funcao real pelo metodo da Bissecao
+% Programa para calcular o zero de uma funcao real pelo metodo de
+% Newton-Raphson
 % 
 % Julio Cardoso Vidal de Figueiredo - 25/04/2017
 % juliocvidal
@@ -14,14 +15,20 @@ erro = input('Informe o erro máximo aceitável. Ex: 10^-7\n');
 fm = erro + 1;
 m=0;
 
-y=funcao(x);
+y=funcao(k)
+y1=diff(y, erro, 2)
+y2=diff(y1)
 
-% Testa logo de cara se as entradas propostas compreendem um zero entre si
-while (sign(y(1)) == sign(y(2)))
-    % Caso não compreendam o zero, o programa pede que o usuario informe
-    % novos valores até que acerte
-    x = input('Você informou dois pontos de mesmo sinal.\n Por favor tente novos pontos\n');
-    y=funcao(x);
+fy = y(x)
+
+% Testa as condicoes de convergencia
+if (y(1) * y(2) >= 0 || y1(1)*y1(2) <= 0 || y2(1)*y2(2) <= 0)
+    % Caso não sejam satisfeitas as condicoes, o programa informa o usuario
+    % e encerra a execucao
+    disp('Os parâmetros informados não atendem às condições de convergência para o método Raphson-Newton');
+    disp('Por favor tente novamente com novos parâmetros');
+    exit(0);
+   
 end
 
 % Executa enquanto o intervalo ou o valor f(m) for maior que o erro
@@ -29,8 +36,9 @@ end
 % o erro
 while(abs(x(1)-x(2)) > erro || fm >= erro)
     
-    % Calcula o novo ponto m na metade dos intervalo
-    m = (x(1) + x(2)) / 2;
+    % Calcula o novo ponto m segundo a formula:
+    % Xn = (a*f(b) - b*f(a))/f(b) - f(a)
+    m = (x(1)*y(2) - x(2)*y(1)) / y(2) - y(1);    
     fm=funcao(m);
     
     if (fm == 0) break; end

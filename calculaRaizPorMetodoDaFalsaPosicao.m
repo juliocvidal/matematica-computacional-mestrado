@@ -1,7 +1,8 @@
 % Mestrado em Engenharia da Computacao e Sistemas - UEMA
 % Disciplica de Matematica Computacional Aplicada
 %
-% Programa para calcular o zero de uma funcao real pelo metodo da Bissecao
+% Programa para calcular o zero de uma funcao real pelo metodo da Falsa
+% Posição
 % 
 % Julio Cardoso Vidal de Figueiredo - 25/04/2017
 % juliocvidal
@@ -29,8 +30,9 @@ end
 % o erro
 while(abs(x(1)-x(2)) > erro || fm >= erro)
     
-    % Calcula o novo ponto m na metade dos intervalo
-    m = (x(1) + x(2)) / 2;
+    % Calcula o novo ponto m segundo a formula:
+    % Xn = (a*f(b) - b*f(a))/f(b) - f(a)
+    m = (x(1)*y(2) - x(2)*y(1)) / y(2) - y(1);    
     fm=funcao(m);
     
     if (fm == 0) break; end
