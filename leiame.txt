@@ -1,0 +1,17 @@
+Instruções 
+
+Metodo da Bissecao:
+- Executar calculaRaizPorMetodoBissecao
+- Definir a funcao a ser utilizada no arquivo funcao.m
+- Passar parametros seguindo o formato solicitado pelo programa. Ex. para o intervalo: [10,40] 
+
+Metodo da Falsa Posicao
+- Executar calculaRaizPorMetodoDaFalsaPosicao
+- O restante é análogo
+
+Metodo de NewtonRaphson
+- Executar calculaRaizPorMetodoDeNewtonRaphson
+- Escrever a funcao no arquivo funcao.m
+- Escrever a primeira derivada no arquivo funcaoDerivada.m
+- Escrever a segunda derivada no arquivo funcaoDerivadaSegunda.m
+- Passar parametros conforme solicitado
