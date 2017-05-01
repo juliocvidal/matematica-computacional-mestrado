@@ -11,7 +11,9 @@ Metodo da Falsa Posicao
 
 Metodo de NewtonRaphson
 - Executar calculaRaizPorMetodoDeNewtonRaphson
-- Escrever a funcao no arquivo funcao.m
+- Escrever a funcao no arquivo funcao.m (os arquivos ja tem alguns exemplos de funcoes utilizadas nos testes)
 - Escrever a primeira derivada no arquivo funcaoDerivada.m
 - Escrever a segunda derivada no arquivo funcaoDerivadaSegunda.m
-- Passar parametros conforme solicitado
+- Passar parametros conforme solicitado. 
+	-Ex. para o intervalo: [0,2] (deve ser seguida essa exata sintaxe, digitando inclusive os colchetes)
+	-Ex. para o erro: 10^-2
