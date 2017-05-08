@@ -1,49 +1,126 @@
-x1 = 1;
-x2 = 1;
-x3 = 1;
-x4 = 1;
 
-erro = 10^-4;
 %coeficientes = load(input('informe o nome do arquivo da matriz de coeficientes\n'))
-coeficientes = load('/Users/juliocvidal/Documents/MATLAB/mat1.mat');
+%coeficientes = load('/Users/juliocvidal/Documents/MATLAB/mat1.mat');
 
 %constantes = load(input('informe o nome do arquivo do vetor de constantes\n'))
-constantes = load('/Users/juliocvidal/Documents/MATLAB/constantes.mat');
+%constantes = load('/Users/juliocvidal/Documents/MATLAB/constantes.mat');
 
-a = coeficientes.mat;
-c = constantes.const;
-solucao = 1;
+clear;
+
+a = input('Informe a Matriz de coeficientes:\n');%coeficientes.mat;
+c = input('vetor\n');%constantes.const;
+
+%vetor de chutes iniciais 
+x = input('informe um vetor de chutes iniciais de acordo com o tamanho da matriz. Ex. para uma matriz 4x4: [1 1 1 1]\n');
+
+solucao = 0;
 tamanho = 0;
 
-if ( abs(a(1,1)) < (abs(a(1,2)) + abs(a(1,3)) + abs(a(1,4)) ) || abs(a(2,2)) < (abs(a(2,1)) + abs(a(2,3)) + abs(a(2,4)) ) || abs(a(3,3)) < (abs(a(3,1)) + abs(a(3,2)) + abs(a(3,4)) ) || abs(a(4,4)) < (abs(a(4,1)) + abs(a(4,2)) + abs(a(4,3)) ))
-    solucao = 0;
-end  
+erro = 10^-7;
 
- while(solucao)
-     
-    tamanho = max(size(x1));
+impossivel = 0;
+
+ while(true)
+    tamanhoMatriz = max(size(a));
+    tamanhoVetorConstantes = max(size(c));
+    diagonal = 0;
     
-    novox1 = (c(1) - a(1,2).*x2(tamanho) - a(1,3).*x3(tamanho) - a(1,4).*x4(tamanho))/a(1,1);
-    novox2 = (c(2) - a(2,1).*x1(tamanho) - a(2,3).*x3(tamanho) - a(2,4).*x4(tamanho))/a(2,2);
-    novox3 = (c(3) - a(3,1).*x1(tamanho) - a(3,2).*x2(tamanho) - a(3,4).*x4(tamanho))/a(3,3);
-    novox4 = (c(4) - a(4,1).*x1(tamanho) - a(4,2).*x2(tamanho) - a(4,3).*x3(tamanho))/a(4,4);
+    % variavel i vai ser usada para caminhar linhas
+    for i=1:tamanhoMatriz
+        
+        %sempra que inicia uma linha zera os valores
+        linha = 0;
+        
+        %variavel j caminha nas colunas
+        for j=1:tamanhoMatriz
+            
+            %se forem iguais significa que esse indice faz parte da
+            %diagonal principal
+            if (i==j)
+                %ja armazenando os elemento da diagonal num vetor para usar
+                %la adiante no outro for
+                diagonal(i) = abs(a(i,j));
+            %senao, faz parte da linha, obviamente, entao deve ser somado
+            %aos outros itens da linha
+            else
+                linha = linha + abs(a(i,j));
+            end
+        end
+        %quando termina o laco da variavel j, significa o fim de uma linha,
+        %ou seja, j ja passou por todas colunas daquela linha.
+        %verifica entao se a diagonal ? menor que a linha. se for ? pq nao
+        %da pra resolver o sistema por esse metodo. seta a flag impossivel
+        %pra false e for?a saida do la?o pra nao ficar processando a toda        
+        if abs(diagonal(i)) < abs(linha)
+            impossivel = 1; 
+            break;
+        end
+    end    
     
-    if( (abs(abs(novox1) - abs(x1(tamanho))) < erro) & (abs(abs(novox2) - abs(x2(tamanho))) < erro) & (abs(abs(novox3) - abs(x3(tamanho))) < erro) & (abs(abs(novox4) - abs(x4(tamanho))) < erro))
+    %se a flag impossivel estiver verdadeira, pode encerrar a execu??o do
+    %la?o principal, que ? o while
+    if (impossivel)
         break;
     end
     
-    x1(tamanho+1) = novox1;
-    x2(tamanho+1) = novox2;
-    x3(tamanho+1) = novox3;
-    x4(tamanho+1) = novox4;
+    solucao = 1;
+    
+    %so me interessa aqui a quantidade de linhas, pois eh esse o numero que
+    %vai aumentar conforme forem surgindo novos valores de x, o numero de
+    %colunas eh sempre constante e igual a quantidade de variaveis
+    [tamanho, lixo] = size(x);
+    
+    %zera o novoX a cada interacao so por precaucao
+    novoX = 0;
+    
+    % variavel i vai ser usada para caminhar linhas
+    for i=1:tamanhoMatriz
+        
+        %sempra que inicia uma linha zera os valores
+        linha = 0;
+        
+        %variavel j caminha nas colunas
+        for j=1:tamanhoMatriz
+            
+            %verifica a diagonal de novo, dessa vez para pegar somente os
+            %elementos q nao fazem parte da diagonal e somar na linha
+            if (i~=j)
+                %vai adicionando os itens na linha ja com sinal negativo
+                %x(tamanho, j) quer dizer que quero pegar a linha atual da
+                %matriz de solucoes, ou seja o tamanho dela, ja que ela
+                %cresce em linhas e eh constante em colunas.
+                %e o j eh pra pegar a coluna certa, ou seja a11 deve
+                %multiplicar x(tamanho, 1) e por a? vai
+                linha = linha - a(i,j)*x(tamanho,j);
+            end
+        end
+        %finalmente ao fim de cada linha, calcula o novox da forma que ja
+        %se sabe: constante menos a soma das linhas dividido pelo elemento
+        %da diagonal
+        novoX(i) = (c(i) + linha)/diagonal(i);
+    end
+      
+    %verifica se o novoX encontrado menos o anterior eh menor que o erro.
+    % essa sintaxe bizarra x(tamanho,:) indica que quero pegar a ultima
+    % linha inteira da matriz. como se fosse um vetor
+    if (abs(abs(novoX) - abs(x(tamanho,:)))  < erro)
+        break;
+    end
+
+    %caso nao tenha caido no if, quer dizer que a solucao ainda nao foi
+    %encontrada, entao o novoX deve ser adicionada a matriz c e o algoritmo
+    %continua.
+    %esse eh o ponto em que a matriz cresce em linhas, mas continua
+    %constante em colunas,
+    x = [x; novoX];
  end
  
- if (solucao)
-    plot (x1, x2, x3, x4);
+ if (solucao)         
+   plot (x);
     
     disp('solucoes encontradas');
-    
-    fprintf('x1: %f x2: %f x3: %f x4: %f \ntamanho: %d\n', x1(tamanho), x2(tamanho), x3(tamanho), x4(tamanho), tamanho);
+    x(tamanho,:)
+    fprintf('Iteracoes: %d\n', tamanho);
     
  else
      disp('impossivel resolver esse sistema por esse metodo');

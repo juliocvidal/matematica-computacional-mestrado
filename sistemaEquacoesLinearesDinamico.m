@@ -1,19 +1,22 @@
 
 %coeficientes = load(input('informe o nome do arquivo da matriz de coeficientes\n'))
-coeficientes = load('/Users/juliocvidal/Documents/MATLAB/mat1.mat');
+%coeficientes = load('/Users/juliocvidal/Documents/MATLAB/mat1.mat');
 
 %constantes = load(input('informe o nome do arquivo do vetor de constantes\n'))
-constantes = load('/Users/juliocvidal/Documents/MATLAB/constantes.mat');
+%constantes = load('/Users/juliocvidal/Documents/MATLAB/constantes.mat');
+
+clear;
+
+a = input('Informe a Matriz de coeficientes:\n');%coeficientes.mat;
+c = input('vetor\n');%constantes.const;
 
 %vetor de chutes iniciais 
 x = input('informe um vetor de chutes iniciais de acordo com o tamanho da matriz. Ex. para uma matriz 4x4: [1 1 1 1]\n');
 
-a = coeficientes.mat;
-c = constantes.const;
 solucao = 0;
 tamanho = 0;
 
-erro = 10^-4;
+erro = 10^-7;
 
 impossivel = 0;
 
@@ -94,7 +97,7 @@ impossivel = 0;
         %finalmente ao fim de cada linha, calcula o novox da forma que ja
         %se sabe: constante menos a soma das linhas dividido pelo elemento
         %da diagonal
-        novoX(i) = (c(i) - linha)/diagonal(i);
+        novoX(i) = (c(i) + linha)/diagonal(i);
     end
       
     %verifica se o novoX encontrado menos o anterior eh menor que o erro.
@@ -117,6 +120,7 @@ impossivel = 0;
     
     disp('solucoes encontradas');
     x(tamanho,:)
+    fprintf('Iteracoes: %d\n', tamanho);
     
  else
      disp('impossivel resolver esse sistema por esse metodo');
