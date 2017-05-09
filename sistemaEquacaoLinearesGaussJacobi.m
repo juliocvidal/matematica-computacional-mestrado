@@ -7,11 +7,11 @@
 
 clear;
 
-a = input('Informe a Matriz de coeficientes:\n');%coeficientes.mat;
-c = input('vetor\n');%constantes.const;
+a = input('Informe a Matriz de coeficientes. Ex. para uma matriz 3x3: [9 4 2; 1 3 2; 2 2 9]\n');%coeficientes.mat;
+c = input('Informe o vetor de constantes. Ex. para uma matriz 3x3: [13 6 5]\n');%constantes.const;
 
-%vetor de chutes iniciais 
-x = input('informe um vetor de chutes iniciais de acordo com o tamanho da matriz. Ex. para uma matriz 4x4: [1 1 1 1]\n');
+%vetor de chutes iniciais
+x = input('Informe um vetor de chutes iniciais de acordo com o tamanho da matriz. Ex. para uma matriz 3x3: [0 0 0]\n');
 
 solucao = 0;
 tamanho = 0;
@@ -20,7 +20,7 @@ erro = 10^-7;
 
 impossivel = 0;
 
- while(true)
+while(true)
     tamanhoMatriz = max(size(a));
     tamanhoVetorConstantes = max(size(c));
     diagonal = 0;
@@ -40,8 +40,8 @@ impossivel = 0;
                 %ja armazenando os elemento da diagonal num vetor para usar
                 %la adiante no outro for
                 diagonal(i) = abs(a(i,j));
-            %senao, faz parte da linha, obviamente, entao deve ser somado
-            %aos outros itens da linha
+                %senao, faz parte da linha, obviamente, entao deve ser somado
+                %aos outros itens da linha
             else
                 linha = linha + abs(a(i,j));
             end
@@ -50,12 +50,12 @@ impossivel = 0;
         %ou seja, j ja passou por todas colunas daquela linha.
         %verifica entao se a diagonal ? menor que a linha. se for ? pq nao
         %da pra resolver o sistema por esse metodo. seta a flag impossivel
-        %pra false e for?a saida do la?o pra nao ficar processando a toda        
+        %pra false e for?a saida do la?o pra nao ficar processando a toda
         if abs(diagonal(i)) < abs(linha)
-            impossivel = 1; 
+            impossivel = 1;
             break;
         end
-    end    
+    end
     
     %se a flag impossivel estiver verdadeira, pode encerrar a execu??o do
     %la?o principal, que ? o while
@@ -99,29 +99,29 @@ impossivel = 0;
         %da diagonal
         novoX(i) = (c(i) + linha)/diagonal(i);
     end
-      
+    
     %verifica se o novoX encontrado menos o anterior eh menor que o erro.
     % essa sintaxe bizarra x(tamanho,:) indica que quero pegar a ultima
     % linha inteira da matriz. como se fosse um vetor
     if (abs(abs(novoX) - abs(x(tamanho,:)))  < erro)
         break;
     end
-
+    
     %caso nao tenha caido no if, quer dizer que a solucao ainda nao foi
     %encontrada, entao o novoX deve ser adicionada a matriz c e o algoritmo
     %continua.
     %esse eh o ponto em que a matriz cresce em linhas, mas continua
     %constante em colunas,
     x = [x; novoX];
- end
- 
- if (solucao)         
-   plot (x);
+end
+
+if (solucao)
+    plot (x);
     
     disp('solucoes encontradas');
     x(tamanho,:)
     fprintf('Iteracoes: %d\n', tamanho);
     
- else
-     disp('impossivel resolver esse sistema por esse metodo');
- end
+else
+    disp('impossivel resolver esse sistema por esse metodo');
+end
