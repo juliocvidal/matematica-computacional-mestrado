@@ -1,19 +1,27 @@
 Instruções 
 
-Metodo da Bissecao:
-- Executar calculaRaizPorMetodoBissecao
-- Definir a funcao a ser utilizada no arquivo funcao.m
-- Passar parametros seguindo o formato solicitado pelo programa. Ex. para o intervalo: [10,40] 
+**Metodo Gauss-Jacobi**
 
-Metodo da Falsa Posicao
-- Executar calculaRaizPorMetodoDaFalsaPosicao
-- O restante é análogo
+- Executar sistemaEquacaoLinearesGaussJacobi
+- Passar parametros seguindo o formato solicitado pelo programa. 
 
-Metodo de NewtonRaphson
-- Executar calculaRaizPorMetodoDeNewtonRaphson
-- Escrever a funcao no arquivo funcao.m (os arquivos ja tem alguns exemplos de funcoes utilizadas nos testes)
-- Escrever a primeira derivada no arquivo funcaoDerivada.m
-- Escrever a segunda derivada no arquivo funcaoDerivadaSegunda.m
-- Passar parametros conforme solicitado. 
-	-Ex. para o intervalo: [0,2] (deve ser seguida essa exata sintaxe, digitando inclusive os colchetes)
-	-Ex. para o erro: 10^-2
+	- Informe a Matriz de coeficientes. Ex. para uma matriz 3x3: 
+
+		[9 4 2; 1 3 2; 2 2 9]
+
+	- Informe o vetor de constantes. Ex. para uma matriz 3x3:
+
+		[13 6 5]
+
+	- Informe um vetor de chutes iniciais de acordo com o tamanho da matriz. Ex. para uma matriz 3x3: 
+
+		[0 0 0]
+
+- Serão exibidas as soluções, encontradas, um gráfico exibindo a evolução de cada X e a quantidade de interações que foram necessárias para chegar até a solução.
+
+######################################################
+
+**Metodo Gauss-Seidel**
+
+- Executar sistemaEquacaoLinearesGaussSeidel
+- Os próximos passos são iguais aos de Gauss-Jacobi.
