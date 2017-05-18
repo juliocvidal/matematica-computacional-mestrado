@@ -15,7 +15,7 @@ erro = input('Informe o erro máximo aceitável. Ex: 10^-7\n');
 % Inicializando os valores de m e f(m) para garantir que não caiam nas
 % condições de parada em um momento errado.
 fm = erro + 1;
-xn = x(2) + erro + 1;
+xn = 2;%x(2) + erro + 1;
 
 %Calculo da funcao de x e das derivadas
 y=funcao(x);
@@ -31,8 +31,10 @@ if (y(1) * y(2) >= 0 || y1(1)*y1(2) <= 0 || y2(1)*y2(2) <= 0)
     %exit(1);
 else
     
+    iteracoes = 0;
     %Valida as condições de parada
     while(fm >= erro && abs(abs(xn) - abs(x(2))) > erro)
+        iteracoes = iteracoes + 1;
         
        x(2) = xn;
         %Somente o ponto b se move
@@ -49,7 +51,7 @@ else
         
     end
     
-    fprintf('Zero da funcao foi encontrado em: %f\n', xn);
+    fprintf('Zero da funcao foi encontrado em: %f\nApós %d iterações.\n', xn, iteracoes);
     
 end
 
